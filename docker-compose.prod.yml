@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  word-to-pdf:
+    build: .
+    ports:
+      - "5000:5000"
+      - "8000:8000"
+    environment:
+   - MY_AWS_ACCESS_KEY_ID=${MY_AWS_ACCESS_KEY_ID}
+   - MY_AWS_SECRET_ACCESS_KEY=${MY_AWS_SECRET_ACCESS_KEY}
+   - MY_AWS_REGION=${MY_AWS_REGION}
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    restart: always
+
+volumes:
+  grafana-storage: 

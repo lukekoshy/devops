@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-pdf"></i> Word to PDF Converter</h1>
+            <p class="subtitle">Convert your Word documents to PDF format easily</p>
+        </header>
+
+        <main>
+            <div class="upload-container" id="dropZone">
+                <form id="uploadForm" action="/convert" method="post" enctype="multipart/form-data">
+                    <div class="file-input-container">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p class="drag-text">Drag and drop your file here or</p>
+                        <label class="file-label">
+                            <input type="file" name="word_file" accept=".docx" required>
+                            <span class="button-text">Choose File</span>
+                        </label>
+                        <p id="fileInfo" class="file-info">No file selected</p>
+                    </div>
+                    <button type="submit" id="convertBtn" disabled>
+                        <i class="fas fa-sync-alt"></i> Convert to PDF
+                    </button>
+                </form>
+            </div>
+
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <p class="status-text" id="statusText">Converting...</p>
+            </div>
+
+            <div id="errorContainer" class="error-container" style="display: none;">
+                <p class="error-message" id="errorMessage"></p>
+                <button onclick="dismissError()" class="dismiss-error">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <p class="limits-info">Maximum file size: 16MB | Supported format: .docx</p>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-lock"></i>
+                    <span>Secure Conversion</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>Fast Processing</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Auto Cleanup</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
